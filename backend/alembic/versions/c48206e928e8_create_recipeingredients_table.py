@@ -1,8 +1,8 @@
 """create recipeingredients table
 
-Revision ID: dd1ee0448aeb
-Revises: 10da908ecd9a
-Create Date: 2026-10-30 16:06:36.446735
+Revision ID: c48206e928e8
+Revises: e507f2ee1414
+Create Date: 2026-10-30 16:37:16.382480
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'dd1ee0448aeb'
-down_revision: Union[str, Sequence[str], None] = '10da908ecd9a'
+revision: str = 'c48206e928e8'
+down_revision: Union[str, Sequence[str], None] = 'e507f2ee1414'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -25,8 +25,9 @@ def upgrade() -> None:
     sa.Column('recipe_id', sa.Integer(), nullable=False),
     sa.Column('ingredient_id', sa.Integer(), nullable=False),
     sa.Column('quantity', sa.Numeric(precision=7, scale=2), nullable=False),
+    sa.CheckConstraint('quantity>0', name='quantity_gt0'),
     sa.ForeignKeyConstraint(['ingredient_id'], ['ingredients.ingredient_id'], ),
-    sa.ForeignKeyConstraint(['recipe_id'], ['recipes.recipe_id'], ),
+    sa.ForeignKeyConstraint(['recipe_id'], ['recipes.recipe_id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('recipe_id', 'ingredient_id')
     )
     # ### end Alembic commands ###

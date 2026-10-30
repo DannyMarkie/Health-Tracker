@@ -1,7 +1,7 @@
 """seed units
 
 Revision ID: 66add92e9815
-Revises: 3d82baaa18e5
+Revises: 1ced2aa1f886
 Create Date: 2026-10-19 20:42:22.184620
 
 """
@@ -15,7 +15,7 @@ from sqlalchemy import table, column
 
 # revision identifiers, used by Alembic.
 revision: str = "66add92e9815"
-down_revision: Union[str, Sequence[str], None] = "3d82baaa18e5"
+down_revision: Union[str, Sequence[str], None] = "1ced2aa1f886"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

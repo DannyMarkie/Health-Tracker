@@ -1,8 +1,8 @@
 """create ingredients table
 
-Revision ID: 34e24374855c
+Revision ID: dd5bb42cce7b
 Revises: 66add92e9815
-Create Date: 2026-10-19 21:44:06.342481
+Create Date: 2026-10-30 16:33:57.625221
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '34e24374855c'
+revision: str = 'dd5bb42cce7b'
 down_revision: Union[str, Sequence[str], None] = '66add92e9815'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -34,6 +34,14 @@ def upgrade() -> None:
     sa.Column('fibre_g', sa.Numeric(precision=7, scale=2), nullable=True),
     sa.Column('package_amount', sa.Integer(), nullable=False),
     sa.Column('package_price', sa.Numeric(precision=7, scale=2), nullable=False),
+    sa.CheckConstraint('carb_g>=0', name='ingredient_carb_gte0'),
+    sa.CheckConstraint('energy_kcal>=0', name='energy_kcal_gte0'),
+    sa.CheckConstraint('fat_g>=0', name='ingredient_fat_gte0'),
+    sa.CheckConstraint('fibre_g>=0', name='ingredient_fibre_gte0'),
+    sa.CheckConstraint('package_amount>0', name='package_amount_gt0'),
+    sa.CheckConstraint('package_price>=0', name='ingredient_price_gte0'),
+    sa.CheckConstraint('protein_g>=0', name='ingredient_protein_gte0'),
+    sa.CheckConstraint('reference_amount>0', name='reference_amount_gt0'),
     sa.ForeignKeyConstraint(['ingredient_unit_id'], ['units.unit_id'], ),
     sa.PrimaryKeyConstraint('ingredient_id')
     )
