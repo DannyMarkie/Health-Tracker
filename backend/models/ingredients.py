@@ -1,5 +1,7 @@
 from decimal import Decimal
+from typing import Union
 
+from pydantic import BaseModel
 from sqlalchemy import CheckConstraint, ForeignKey, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -31,3 +33,16 @@ class Ingredient(Base):
     fibre_g: Mapped[Decimal | None] = mapped_column(Numeric(7, 2))
     package_amount: Mapped[int]
     package_price: Mapped[Decimal] = mapped_column(Numeric(7, 2))
+
+class IngredientsModel(BaseModel):
+    ingredient_brand: str
+    ingredient_name: str
+    ingredient_unit_id: int
+    reference_amount: int
+    package_amount: int
+    package_price: float
+    energy_kcal: Union[int, None]
+    protein_g: Union[float, None]
+    fat_g: Union[float, None]
+    carb_g: Union[float, None]
+    fibre_g: Union[float, None]
