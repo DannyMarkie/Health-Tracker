@@ -1,0 +1,25 @@
+from typing import Annotated
+
+from database import SessionDep
+from fastapi import APIRouter, Depends
+from schemas.recipe_schemas import RecipeCreate, RecipeRead
+from services.recipe_service import RecipeService
+
+router = APIRouter(prefix="/recipes", tags=["recipes"])
+
+
+def get_recipe_service(session: SessionDep) -> RecipeService:
+    return RecipeService(session)
+
+
+RecipeServiceDep = Annotated[RecipeService, Depends(get_recipe_service)]
+
+
+@router.get("", response_model=list[RecipeRead])
+def get_recipes(service: RecipeServiceDep):
+    return service.list_recipes()
+
+
+@router.post("", response_model=RecipeRead, status_code=201)
+def post_recipe(service: RecipeServiceDep, recipe: RecipeCreate):
+    return service.add_recipe(recipe)
