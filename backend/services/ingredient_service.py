@@ -15,4 +15,4 @@ class IngredientService:
         self._db.add(db_ingredient)
         self._db.commit()
         self._db.refresh(db_ingredient)
-        return ingredient
+        return db_ingredient
