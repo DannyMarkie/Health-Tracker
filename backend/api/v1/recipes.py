@@ -23,3 +23,8 @@ def get_recipes(service: RecipeServiceDep):
 @router.post("", response_model=RecipeRead, status_code=201)
 def post_recipe(service: RecipeServiceDep, recipe: RecipeCreate):
     return service.add_recipe(recipe)
+
+
+@router.delete("/{recipe_id}", response_model=RecipeRead)
+def delete_recipe(service: RecipeServiceDep, recipe_id: int):
+    return service.delete_recipe(recipe_id)
