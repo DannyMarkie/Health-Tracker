@@ -16,5 +16,5 @@ class RecipeRead(RecipeBase):
 
 
 class RecipeUpdate(BaseModel):
-    recipe_name: str | None = Field(min_length=1, max_length=255)
-    servings: int | None = Field(gt=0)
+    recipe_name: str | None = Field(default=None, min_length=1, max_length=255)
+    servings: int | None = Field(default=None, gt=0)

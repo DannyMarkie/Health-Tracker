@@ -40,7 +40,7 @@ class RecipeService:
                 status_code=status.HTTP_404_NOT_FOUND, detail="Recipe not found"
             )
 
-        for field, value in recipe.model_dump().items():
+        for field, value in recipe.model_dump(exclude_unset=True).items():
             setattr(db_recipe, field, value)
 
         self._db.commit()
