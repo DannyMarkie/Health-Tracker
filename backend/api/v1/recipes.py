@@ -2,7 +2,7 @@ from typing import Annotated
 
 from database import SessionDep
 from fastapi import APIRouter, Depends
-from schemas.recipe_schemas import RecipeCreate, RecipeUpdate, RecipeRead
+from schemas.recipe_schemas import RecipeCreate, RecipeRead, RecipeUpdate
 from services.recipe_service import RecipeService
 
 router = APIRouter(prefix="/recipes", tags=["recipes"])
