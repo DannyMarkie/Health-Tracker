@@ -1,4 +1,4 @@
-from api.v1 import ingredients, recipes, units
+from api.v1 import ingredients, recipe_ingredients, recipes, units
 from database import SessionDep
 from fastapi import FastAPI
 from sqlalchemy import text
@@ -15,3 +15,4 @@ def health(session: SessionDep):
 app.include_router(ingredients.router, prefix="/api/v1")
 app.include_router(units.router, prefix="/api/v1")
 app.include_router(recipes.router, prefix="/api/v1")
+app.include_router(recipe_ingredients.router, prefix="/api/v1")
