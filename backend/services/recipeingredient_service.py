@@ -1,5 +1,5 @@
-from models.recipe_ingredients import RecipeIngredient
 from fastapi import HTTPException, status
+from models.recipe_ingredients import RecipeIngredient
 from schemas.recipeingredient_schemas import (
     RecipeIngredientCreate,
     RecipeIngredientUpdate,
@@ -37,14 +37,20 @@ class RecipeIngredientService:
             .first()
         )
 
+        if db_recipe_ingredient is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Recipe Ingredient not found",
+            )
+
         for field, value in recipe_ingredient.model_dump(exclude_none=True).items():
             setattr(db_recipe_ingredient, field, value)
 
         self._db.commit()
         self._db.refresh(db_recipe_ingredient)
-        return RecipeIngredient(**recipe_ingredient.model_dump())
+        return db_recipe_ingredient
 
-    def remove_recipe_ingredients(self, recipe_id: int, ingredient_id: int):
+    def remove_recipe_ingredient(self, recipe_id: int, ingredient_id: int):
         recipe_ingredient = (
             self._db.query(RecipeIngredient)
             .filter(
@@ -56,7 +62,8 @@ class RecipeIngredientService:
 
         if recipe_ingredient is None:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="Recipe Ingredient not found"
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Recipe Ingredient not found",
             )
 
         self._db.delete(recipe_ingredient)

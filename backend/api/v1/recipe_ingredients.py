@@ -45,4 +45,4 @@ def update_recipeingredient(
 def remove_recipeingredient(
     service: RecipeIngredientServiceDep, recipe_id: int, ingredient_id: int
 ):
-    return service.remove_recipe_ingredients(recipe_id, ingredient_id)
+    return service.remove_recipe_ingredient(recipe_id, ingredient_id)

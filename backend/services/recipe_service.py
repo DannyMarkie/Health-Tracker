@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 from models.recipes import Recipe
-from schemas.recipe_schemas import RecipeCreate
+from schemas.recipe_schemas import RecipeCreate, RecipeUpdate
 from sqlalchemy.orm import Session
 
 
@@ -29,3 +29,20 @@ class RecipeService:
         self._db.delete(recipe)
         self._db.commit()
         return recipe
+
+    def update_recipe(self, recipe: RecipeUpdate, recipe_id: int):
+        db_recipe = self._db.query(Recipe).filter(
+            Recipe.recipe_id == recipe_id
+        ).first()
+
+        if db_recipe is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Recipe not found"
+            )
+
+        for field, value in recipe.model_dump().items():
+            setattr(db_recipe, field, value)
+
+        self._db.commit()
+        self._db.refresh(db_recipe)
+        return db_recipe

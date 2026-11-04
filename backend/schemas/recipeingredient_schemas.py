@@ -12,8 +12,10 @@ class RecipeIngredientBase(BaseModel):
 class RecipeIngredientCreate(RecipeIngredientBase):
     pass
 
+
 class RecipeIngredientRead(RecipeIngredientBase):
     pass
+
 
 class RecipeIngredientUpdate(RecipeIngredientBase):
     pass
